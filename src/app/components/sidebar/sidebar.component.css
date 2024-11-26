@@ -1,0 +1,23 @@
+.moon_sun *{
+  transition: all 1.2s;  overflow:visible;
+
+}
+svg{
+  overflow:visible;
+  transition: all 0.6s;
+}
+
+.banco{
+  font-family: 'Banco Regular', sans-serif;
+  /*color: #6bda90 !important;*/
+}
+
+.earwig{
+  font-family: 'earwig-factory', sans-serif;
+  /*color: #6bda90 !important;*/
+}
+.alba{
+  font-family: 'alba.super', sans-serif;
+  /*color: #6bda90 !important;*/
+}
+
