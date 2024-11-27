@@ -12,11 +12,13 @@
                   Desafía tu
                   <span class="font-bold text-primary">Velocidad</span>,<span class=""> de Escritura</span>
                </h1>
-            
+               <div class="flex flex-col gap-2 text-2xl p-2">
+                  <p>WPM {{wpm}}</p>
+                  <p>Words {{count_word_success}}</p>
+               </div>
             </div>
-            <div class=" w-full p-10 text-right  sm:mt-0 inline ">
-             <section class=" relative 2test-container">
-               
+            <div class=" w-full text-right  sm:mt-0 inline ">
+             <section *ngIf="!finish" class=" relative 2test-container" >
 
                <main class="output flex flex-wrap gap-2 text-2xl p-2">
                   <p class="word" *ngFor="let word of words">

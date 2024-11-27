@@ -43,24 +43,45 @@ export class HomeComponent implements OnInit, AfterViewInit{
      setInterval(() => {
       if(this.time>0){
         console.log(this.time)
-            this.time--
-        }else if(this.time===0){
-          //console.log('end')
+          this.time--;
+          this.wpmData.push({
+            time: this.time,
+            wpm: ((this.index + this.word_index - this.letter_errors) / 5) / (this.time_start / 60),
+            raw: ((this.index + this.word_index) / 5) / (this.time_start / 60)
+          });
+        }else if(this.time===0 && !this.finish){
+          console.log('end')
+          console.log('caracteres', this.index+ this.word_index)
+          console.log('tiempo',this.time_start)
+          console.log('resultado',(this.index/5)/(this.time_start/60))
+          console.log(this.wpmData)
+          this.finish=true;
+          this.wpm= ((this.index+ this.word_index)/5)/(this.time_start/60)
         }
       }, 1000);
   }
 
+  time=15;
+  time_start=this.time;
 
-  words = ['thing', 'sometimes', 'break', 'went', 'can\'t', 'been', 'question', 'quite', 'quit','hour', 'big', 'even', 'mountain', 'been', 'animal', 'long',];
+  index=0;
+
+  words = ['no', 'wild', 'most', 'since', 'open', 'been', 'question', 'quite', 'quit','hour', 'big', 'even', 'mountain', 'been', 'animal', 'long',];
   word:any;
+  word_index=0;
+  end_word=false;
+  word_success=true;
+  count_word_success=0;
+
   letters:any;
   letter:any;
-  time=10;
-  time_end=10;
-  intervalo: any;
-  word_index=0;
   letter_index=0;
-  index=0;
+  letter_errors=0;
+
+  wpm=0;
+  wpmData:{time:number, wpm:number, raw:number}[]=[];
+
+  finish=false;
   keydown(event: KeyboardEvent) {
     const key = event.key;
 
@@ -72,15 +93,20 @@ export class HomeComponent implements OnInit, AfterViewInit{
 
     //obtenemos la letra del DOM con el index que vamos incrementando
     letter = this.getComponentDom(this.index);
-    this.handleLetterInput(key, letter);
 
     if (this.letters.length !== this.letter_index + 1) {
+      this.handleLetterInput(key, letter);
       this.advanceLetter();
     } else {
-      if (event.code === "Space") {
-      this.advanceWord();
+      if (event.code === "Space" && this.end_word ) {
+        this.end_word=false;
+        this.advanceWord();
+        if(this.word_success) this.count_word_success++;
+        this.word_success=true;
       } else {
+        this.handleLetterInput(key, letter);
         this.markEndOfWord(letter);
+        this.end_word=true;
       }
     }
   }
@@ -91,15 +117,15 @@ export class HomeComponent implements OnInit, AfterViewInit{
   
   handleLetterInput(key:string, letter:Element){
     if (letter) {
-        //si al escribir la letra es incorrecta pintamos la letra de rojo
-        if (key !== this.letter && ( this.letters.length !== this.letter_index + 1)) {
+        if (key !== this.letter ) {
           letter.classList.add("text-red-300");
+          this.word_success=false;
+        }else{
+          this.letter_errors++;
         }
-        //borramos el | que se pinta con la clase word-letter-anim
         letter.classList.remove("word-letter-anim");
       }
   }
-  
   advanceLetter(){
     this.letter_index++;
     this.index++;
@@ -108,11 +134,8 @@ export class HomeComponent implements OnInit, AfterViewInit{
       letter.classList.add("word-letter-anim");
     }
   }
-  
   advanceWord(){
-     // También puedes usar event.key === ' '
     let letter = this.getComponentDom(this.index);
-        console.log("Se presionó la barra espaciadora.");
         letter = document.querySelectorAll(".word-letter")[this.index];
         letter.classList.remove("word-letter-anim-end");
         this.word_index++;
@@ -121,7 +144,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
         letter = document.querySelectorAll(".word-letter")[this.letter_index + this.index];
         letter.classList.add("word-letter-anim");
   }
-
   markEndOfWord(letter: Element | null): void {
     if (letter) {
       letter.classList.add("word-letter-anim-end");
@@ -129,8 +151,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
   keyup(event: KeyboardEvent): void {
     const teclaPresionada = event.key;
-    //console.log('keyup Tecla presionada:', teclaPresionada);
-
     if (teclaPresionada === 'ArrowRight') {
       console.log('Flecha hacia arriba presionada');
     } else if (teclaPresionada === 'ArrowLeft') {
