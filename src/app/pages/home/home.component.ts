@@ -71,47 +71,62 @@ export class HomeComponent implements OnInit, AfterViewInit{
     let letter;
 
     //obtenemos la letra del DOM con el index que vamos incrementando
-    letter = document.querySelectorAll(".word-letter")[this.index];
-    if (letter) {
-      //si al escribir la letra es incorrecta pintamos la letra de rojo
-      if (key !== this.letter) {
-        letter.classList.add("text-red-300");
-      }
-      //borramos el | que se pinta con la clase word-letter-anim
-      letter.classList.remove("word-letter-anim");
-    }
-
+    letter = this.getComponentDom(this.index);
+    this.handleLetterInput(key, letter);
 
     if (this.letters.length !== this.letter_index + 1) {
-      this.letter_index++;
-      this.index++;
-      letter = document.querySelectorAll(".word-letter")[this.index];
-      if (letter) {
-        letter.classList.add("word-letter-anim");
-      }
+      this.advanceLetter();
     } else {
       if (event.code === "Space") {
-        // También puedes usar event.key === ' '
+      this.advanceWord();
+      } else {
+        this.markEndOfWord(letter);
+      }
+    }
+  }
+
+  getComponentDom(index:number){
+    return document.querySelectorAll(".word-letter")[index];
+  }
+  
+  handleLetterInput(key:string, letter:Element){
+    if (letter) {
+        //si al escribir la letra es incorrecta pintamos la letra de rojo
+        if (key !== this.letter && ( this.letters.length !== this.letter_index + 1)) {
+          letter.classList.add("text-red-300");
+        }
+        //borramos el | que se pinta con la clase word-letter-anim
+        letter.classList.remove("word-letter-anim");
+      }
+  }
+  
+  advanceLetter(){
+    this.letter_index++;
+    this.index++;
+    let letter = this.getComponentDom(this.index);
+    if (letter) {
+      letter.classList.add("word-letter-anim");
+    }
+  }
+  
+  advanceWord(){
+     // También puedes usar event.key === ' '
+    let letter = this.getComponentDom(this.index);
         console.log("Se presionó la barra espaciadora.");
         letter = document.querySelectorAll(".word-letter")[this.index];
         letter.classList.remove("word-letter-anim-end");
         this.word_index++;
         this.index++;
         this.letter_index = 0;
-        letter =
-          document.querySelectorAll(".word-letter")[this.letter_index + this.index];
+        letter = document.querySelectorAll(".word-letter")[this.letter_index + this.index];
         letter.classList.add("word-letter-anim");
-      } else {
-        letter = document.querySelectorAll(".word-letter")[this.index];
-        if (letter) {
-          letter.classList.add("word-letter-anim-end");
-        }
-      }
-    }
   }
 
-  
-
+  markEndOfWord(letter: Element | null): void {
+    if (letter) {
+      letter.classList.add("word-letter-anim-end");
+    }
+  }
   keyup(event: KeyboardEvent): void {
     const teclaPresionada = event.key;
     //console.log('keyup Tecla presionada:', teclaPresionada);
