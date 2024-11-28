@@ -1,57 +1,51 @@
 <div class="relative w-full min-h-screen text-textPrimary">
    <div class="hidden absolute inset-0 bg-cover bg-center" style="background-image: url('https://tailwindcss.com/_next/static/media/hero-dark@90.dba36cdf.jpg');">
    </div>
-   <div class="absolute back_gradient_aniamtion">
+   <div class="absolute z-10m w-full h-full bg-bgPrim ">
    </div>
-   <div class="relative z-10 ">
       <app-sidebar-blog></app-sidebar-blog>
-      <div class="container  min-h-screen mx-auto pt-28 flex flex-col justify-center items-center">
-         <section class="sm:gap-16 w-full flex flex-col justify-between items-center  md:mt-2" >
-            <div class="w-full flex flex-col justify-center whitespace-nowrap">
-               <h1 class="break-all font-medium text-2xl md:text-4xl text-center leading-normal " >
+
+   <div class="relative z-10 grid h-full">
+      <div class="container  mx-auto pt-0 sm:pt-28 flex flex-col ">
+         <section class="relative sm:gap-4 w-full flex flex-col h-full  justify-center items-center " >
+            <div class="px-4 mt-20 flex flex-col justify-center items-center whitespace-nowrap">
+               <h1 class="break-all flex items-center flex-wrap font-medium text-2xl md:text-4xl text-center leading-normal " >
                   Desafía tu
                   <span class="font-bold text-primary">Velocidad</span>,<span class=""> de Escritura</span>
                </h1>
-               <div class="flex flex-col gap-2 text-2xl p-2">
-                  <p>WPM {{wpm}}</p>
-                  <p>Words {{count_word_success}}</p>
-               </div>
             </div>
-            <div class=" w-full text-right  sm:mt-0 inline ">
-             <section *ngIf="!finish" class=" relative 2test-container" >
-
-               <main class="output flex flex-wrap gap-2 text-2xl p-2">
-                  <p class="word" *ngFor="let word of words">
-                     <span class="word-letter "*ngFor="let letter of word.split('')">{{letter}}</span>
-                  </p>
-               </main>
-
-                 <div class="timer"></div>                 
-                 <div class="word-input">
-                   <input value='' class="type-word" type="text"  (keydown)="keydown($event)"   (keyup)="keyup($event)" >
-                   <button class="refresh" (click)='restart()'>↻</button>
-                   <div class="count-down">{{time}}</div>
+            <div class=" w-full h-full grid items-center justify-center  ">
+               <section class="px-4 z-10 py-10 relative ease-in-out duration-100 transition-opacity" [ngClass]="{ 'opacity-0s hiddens': finish }"> 
+                  
+                 <div class="flex gap-2">
+                     <div class="text-2xl text-primary">{{time}}</div>
+                  <button class="text-xl text-primary " (click)='restart()'>↻</button>
                  </div>
-                 
-                 <div class="result"></div>
+                  <main class="mb-10 flex flex-wrap gap-2 text-3xl" *ngIf="words.length>0">
+                     <p class="word" *ngFor="let word of words" >
+                        <span class="word-letter "*ngFor="let letter of word.split('')">{{letter}}</span>
+                     </p>
+                  </main>
+                  <input value='' class=" type-word opacity-0 absolute w-full top-0 left-0 bg-transparent h-full" type="text"  (keydown)="keydown($event)"   (keyup)="keyup($event)" >
+               </section> 
 
-                 <div class="incorrect"></div>
-               </section>  
             </div>
-         </section>
 
-      <div class="container mx-auto pt-10" >
-        
-         <section id="contact" class="border-t border-slate-500/10 w-full mt-10 py-20 flex flex-col gap-10 flex-wrap justify-center items-center">
-            <ul class="flex flex-wrap gap-4 sm:gap-8 mt-4  ">
+         </section>
+      </div>
+      <footer class="container mx-auto justify-self-end  self-end place place-self-end" >
+         <div class="flex gap-4  px-4 self-end place place-self-center">
+               </div> 
+         <section id="contact" class="border-t border-slate-400/10 w-full mt-10 py-6 flex flex-col gap-10 flex-wrap justify-center items-center">
+            <ul class="flex flex-wrap gap-4 sm:gap-8   ">
                <a href="mailto:ffores93@gmail.com" role="button" >
                <app-button3d 
                [rounded]="'7px'" [title]="''"
                [type]="'btn_disabled'"
-               font_size="14px" [font_body_weight]="'900'"  [height]="'40px'"
-               [width]="'80px'" [raise]="6">
+               font_size="14px" [font_body_weight]="'900'"  [height]="'30px'"
+               [width]="'70px'" [raise]="4">
                <div class="flex gap-3  items-center uppercase">
-                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 50 50" width="24" height="24">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 50 50" width="18" height="18">
                      <path fill="#FFF" d="M4.9,14L25,30.5L45.1,14v-3.7H4.9V14z M4.9,36.4l9.9-11l-9.9-8.9C4.9,16.6,4.9,36.4,4.9,36.4zM45.1,36.7L34.9,25.5L45,16.7L45.1,36.7L45.1,36.7z M25,33.7l-8.2-6.8L4.9,39.6h40.2L33.2,26.8L25,33.7z"></path>
                   </svg>
                </div>
@@ -62,11 +56,11 @@
                [bg_front_color]="'#0284c7'" 
                [bg_back_color]="'#075985'" 
                [border_style]="'solid #38bdf8 var(--border)'" 
-               font_size="14px" [font_body_weight]="'900'"  [height]="'40px'"
-               [width]="'80px'" [raise]="6">
+               font_size="14px" [font_body_weight]="'900'"  [height]="'30px'"
+               [width]="'70px'" [raise]="4">
                <a  role="button" href="https://www.linkedin.com/in/francesc-for%C3%A9s-campos-3494a2147">
                   <div class="flex gap-3  items-center uppercase">
-                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 50 50" width="24" height="24">
+                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 50 50" width="18" height="18">
                         <path fill="#FFF" d="M13.8,41.7H5.4V13.6h8.4C13.8,13.6,13.8,41.7,13.8,41.7z M44.7,41.7h-8.4v-15c0-3.9-1.4-5.9-4.2-5.9c-2.2,0-3.6,1.1-4.3,3.3c0,3.5,0,17.6,0,17.6h-8.4c0,0,0.1-25.3,0-28.1h6.7l0.5,5.6h0.2c1.7-2.8,4.5-4.7,8.3-4.7c2.9,0,5.2,0.8,7,2.8s2.7,4.7,2.7,8.5L44.7,41.7L44.7,41.7z M9.6,2.3C12,2.3,14,4.2,14,6.5s-2,4.2-4.4,4.2S5.2,8.8,5.2,6.5C5.3,4.2,7.2,2.3,9.6,2.3z"></path>
                      </svg>
                   </div>
@@ -77,11 +71,11 @@
                [bg_front_color]="'#1e293b'" 
                [bg_back_color]="'#111827'" 
                [border_style]="'solid #475569 var(--border)'" 
-               font_size="14px" [font_body_weight]="'900'"  [height]="'40px'"
-               [width]="'80px'" [raise]="6">
+               font_size="14px" [font_body_weight]="'900'"  [height]="'30px'"
+               [width]="'70px'" [raise]="4">
                <a role="button" href="https://github.com/francescfores">
                   <div class="flex gap-3  items-center uppercase">
-                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 50 50" width="24" height="24">
+                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 50 50" width="18" height="18">
                         <path fill="#FFF" d="M25,2.5C12.2,2.5,1.9,12.8,1.9,25.6c0,10.2,6.6,18.9,15.8,21.9c1.2,0.2,1.5-0.5,1.5-1.1c0-0.5,0-2.1,0-4c-6.4,1.4-7.8-3-7.8-3c-1-2.7-2.6-3.4-2.6-3.4C6.7,34.6,9,34.6,9,34.6c2.3,0.2,3.5,2.4,3.5,2.4c2.1,3.5,5.4,2.5,6.7,1.9c0.2-1.5,0.8-2.5,1.5-3.1c-5.1-0.6-10.5-2.6-10.5-11.4c0-2.5,0.9-4.6,2.4-6.2c-0.2-0.6-1-2.9,0.2-6.1c0,0,1.9-0.6,6.3,2.4c1.8-0.5,3.8-0.8,5.8-0.8s3.9,0.3,5.8,0.8c4.4-3,6.3-2.4,6.3-2.4c1.3,3.2,0.5,5.5,0.2,6.1c1.5,1.6,2.4,3.7,2.4,6.2c0,8.9-5.4,10.8-10.5,11.4c0.8,0.7,1.6,2.1,1.6,4.3c0,2.9,0,5.6,0,6.4c0,0.6,0.4,1.3,1.5,1.1C41.4,44.5,48,35.9,48,25.7C48.1,12.8,37.8,2.5,25,2.5z"></path>
                      </svg>
                   </div>
@@ -89,11 +83,44 @@
                </app-button3d>
             </ul>
          </section>
-         <div class="py-2 font-general-regular flex justify-center items-center text-center">
-            <div class="text-xl">© 2024
-               <a href="https://francescfores.github.io/" target="__blank" class="font-medium uppercase hover:underline hover:text-indigo-600 dark:hover:text-indigo-300 ml-1 duration-500">Francesc Fores</a>
+         <div class="hidden py-0 font-general-regular flex justify-center items-center text-center">
+            <div class="text-sm">© 2024
+               <a href="https://francescfores.github.io/" target="__blank" class="font-normal uppercase hover:underline hover:text-indigo-600 dark:hover:text-indigo-300 ml-1 duration-500">Francesc Fores</a>
             </div>
          </div>
+      </footer>
+      <div class="h-full w-full absolute bg-bgPrim/70 z-10 flex justify-center items-center" [ngClass]="{ 'hidden opacity-0': !finish }">
+          <div class="w-full sm:w-3/4 place-self-center z-10 py-10 mx-4 px-8 border-[2px] border-slate-400/10  backdrop-blur-[2.5px]  rounded top-0  
+               bg-bgPrim/95  flex flex-col gap-2  ease-in-out duration-100 transition-opacity " >
+                   <canvas id="myChart" ></canvas>
+              
+                  <div [ngClass]="{ ' opacity-0': !finish }" class="font-medium   whitespace-nowrap flex flex-wrap  gap-4 text-xl text-left  justify-center">
+                  <p class="">WPM </p> 
+                  <p class="text-primary text-5xl ml-0 ">{{wpm}}</p>
+                  <p>RAW</p>
+                  <p class="text-primary text-5xl ml-0 ">{{raw}}</p>
+                  <p>Words</p>
+                  <p class="text-primary text-5xl ml-0 ">{{count_word_success}}</p>
+                  <p>Time</p>
+                  <p class="text-primary text-5xl ml-0">{{time_start}}</p>
+               
+               </div>
+               <div class="w-full flex justify-center pt-10">
+                   <app-button3d (click)='restart()'
+               [rounded]="'7px'" [title]="''"
+               [bg_front_color]="'#EC9832'" 
+               [bg_back_color]="'#BB6E11'" 
+               [border_style]="'solid #F1B46A var(--border)'" 
+               font_size="14px" [font_body_weight]="'900'"  [height]="'32px'"
+               [width]="'70px'" [raise]="4">
+               <a role="button">
+                  <div class="text-2xl flex items-center ">
+                     ↻
+                  </div>
+               </a>
+               </app-button3d>
+               </div>
+               </div>
       </div>
-   </div>
+             
 </div>

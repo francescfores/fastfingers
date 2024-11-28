@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:tailwind": "tailwind build -i src/assets/styles/index.css -o src/assets/styles/tailwind.css",
-    "predeploy": "ng build --configuration=production --base-href /",
+    "predeploy": "ng build --configuration=production --base-href https://francescfores.github.io/fastfingers/",
     "deploy": "gh-pages -d dist/fastfingers/browser"
   },
   "private": true,
@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "chart.js": "^4.4.6",
     "jquery": "^3.7.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
